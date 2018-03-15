@@ -16,8 +16,9 @@ class CreateBodyTable extends Migration
         Schema::create('body', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('description');
-            $table->timestamps();
+            $table->text('description');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

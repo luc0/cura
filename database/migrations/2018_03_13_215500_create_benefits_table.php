@@ -15,10 +15,10 @@ class CreateBenefitsTable extends Migration
     {
         Schema::create('benefits', function (Blueprint $table) {
             $table->increments('id');
-            $table->string('description');
-            $table->integer('body_id')->unsigned()->foreign('body_id')->references('id')->on('body');
-            $table->integer('disease_id')->unsigned()->foreign('disease_id')->references('id')->on('diseases');
-            $table->timestamps();
+            $table->text('description');
+            $table->morphs('benefitable');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

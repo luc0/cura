@@ -16,9 +16,10 @@ class CreateAsanasTable extends Migration
         Schema::create('asanas', function (Blueprint $table) {
             $table->increments('id');
             $table->string('name');
-            $table->string('image');
-            $table->string('description');
-            $table->timestamps();
+            $table->text('image');
+            $table->text('description');
+            $table->timestamp('created_at')->useCurrent();
+            $table->timestamp('updated_at')->useCurrent();
         });
     }
 

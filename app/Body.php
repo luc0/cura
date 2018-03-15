@@ -8,4 +8,8 @@ class Body extends Model
 {
     protected $table = 'body';
 
+    public function benefits()
+    {
+        return $this->morphMany('App\Benefit', 'benefitable');
+    }
 }
