@@ -9,36 +9,38 @@
 namespace App\Http\Controllers;
 
 use App\Asana;
+use Illuminate\Http\Request;
 use Illuminate\Routing\Controller as BaseController;
 
 class AsanaController extends BaseController
 {
-    public function show()
+    public function index()
     {
-        $asana = Asana::first();
+        return view('home')->with([
+            'asana' => Asana::all()
+        ]);
+    }
+    public function show(int $id)
+    {
+        $asana = Asana::where('id', $id)->first();
 
         $benefits = $asana->benefits()->get();
 
-        return view('home')->with([
+        return view('show')->with([
             'asana' => $asana,
             'benefits' => $benefits
         ]);
     }
 
-    public function list($search)
+    public function list(Request $request)
     {
-        // TODO: no esta contemplado en Laravel
-        // https://github.com/laravel/framework/issues/5429
-        $asanas = Asana::whereHas('benefits.body', function ($query) use ($search) {
-            $query->where('name', '=', $search);
-            //$query->whereHas('body', function ($q) use ($search) {
-              //  $q->where('name', '=', $search);
-            //});
-        })->toSQL();
-        dd($asanas);
+        $search = $request->get('asana');
+
+        $asanas = Asana::whereBenefitableLike($search);
 
         return view('list')->with([
-            'asanas' => $asanas
+            'asanas' => $asanas,
+            'request' => $request
         ]);
     }
 }

@@ -1,8 +1,9 @@
 <?php
 
-use App\Asana;
 use Illuminate\Support\Facades\Route;
 
-Route::get('/', 'AsanaController@show');
+Route::get('/', 'AsanaController@index')->name('home');
 
-Route::get('buscar/{item}', 'AsanaController@list');
+Route::get('/asana/{id}', 'AsanaController@show')->name('asana');
+
+Route::get('buscar', 'AsanaController@list')->name('search');
