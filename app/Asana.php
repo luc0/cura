@@ -22,7 +22,12 @@ class Asana extends Model
     {
         return $this->all()->filter(function ($asana) use ($search) {
             return $asana->benefits->filter(function ($benefit) use ($search) {
-                return $benefit->benefitable->where('name', 'ilike', "%$search%")->count();
+                $findByName = $benefit->benefitable->where('name', 'ilike', "%$search%")->count();
+                if (!$findByName) {
+                    echo $benefit->id . '->' . $benefit->where('tags', 'ilike', "%$search%")->count() . '<br/>';
+                    return $benefit->where('tags', 'ilike', "%$search%")->count();
+                }
+                return $findByName;
             })->count();
         });
     }

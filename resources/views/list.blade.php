@@ -22,6 +22,10 @@
             .benefit-image {
                 margin-right: 5px;
             }
+            .asana-title span{
+                color:#999;
+                font-size: 14px;
+            }
         </style>
     </head>
     <body>
@@ -39,8 +43,11 @@
                                     </a>
                                 </div>
                                 <div class="media-body">
-                                    <h5 class="mt-0"><a href="{{ route('asana', ['id' => $asana->id]) }}">{{ $asana->name }}</a></h5>
-                                    {{ $asana->description }}
+                                    <h5 class="mt-0 asana-title">
+                                        <a href="{{ route('asana', ['id' => $asana->id]) }}">{{ $asana->name }}</a>
+                                        <span>{{ $asana->name_spanish }}</span>
+                                    </h5>
+                                    <p>{{ $asana->description }}</p>
                                     <div>
                                         @foreach($asana->benefits as $benefit)
                                             <span class="badge badge-primary">{{ $benefit->benefitable->name }}</span>

@@ -13,7 +13,7 @@ class Benefit extends Model
         return $this->morphTo();
     }
 
-    public function body()
+    /*public function body()
     {
         return $this->belongsTo(Body::class, 'benefitable_type')
             ->where('benefits.benefitable_type', Body::class);
@@ -23,9 +23,9 @@ class Benefit extends Model
     {
         return $this->belongsTo(Disease::class, 'benefitable_type')
             ->where('benefits.benefitable_type', Disease::class);
-    }
+    }*/
 
-    public function scopeWhereHasBenefitable($query, $callable = null)
+    /*public function scopeWhereHasBenefitable($query, $callable = null)
     {
         return $query->where(function ($query) use ($callable) {
             list($type, $key) = $this->getPolymorphicFields();
@@ -42,11 +42,11 @@ class Benefit extends Model
                 });
             });
         });
-    }
+    }*/
 
-    protected function getPolymorphicFields()
+    /*protected function getPolymorphicFields()
     {
         $relation = $this->benefitable();
         return [$relation->getMorphType(), $relation->getForeignKey()];
-    }
+    }*/
 }
