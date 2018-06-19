@@ -21,14 +21,15 @@ class Asana extends Model
     public function scopeWhereBenefitableLike($query, $search)
     {
         return $this->all()->filter(function ($asana) use ($search) {
-            return $asana->benefits->filter(function ($benefit) use ($search) {
-                $findByName = $benefit->benefitable->where('name', 'ilike', "%$search%")->count();
-                if (!$findByName) {
-                    echo $benefit->id . '->' . $benefit->where('tags', 'ilike', "%$search%")->count() . '<br/>';
-                    return $benefit->where('tags', 'ilike', "%$search%")->count();
+            return $asana->benefits->first(function ($benefit) use ($search) {
+                $foundInName = collect($benefit->benefitable)->contains($search);
+                if (!$foundInName) {
+                    dump(collect($benefit));
+                    $foundInTags = collect($benefit)->contains($search);
+                    return $foundInTags;
                 }
-                return $findByName;
-            })->count();
+                return $foundInName;
+            });
         });
     }
 }
