@@ -13,6 +13,11 @@ class Benefit extends Model
         return $this->morphTo();
     }
 
+    public function getTags()
+    {
+        return explode(',', $this->tags);
+    }
+
     /*public function body()
     {
         return $this->belongsTo(Body::class, 'benefitable_type')

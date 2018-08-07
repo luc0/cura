@@ -1,5 +1,5 @@
 ## TODO
-- Chequear porque el buscar por tags devuelve TODO
+[x] - Chequear porque el buscar por tags devuelve TODO
 
 #### Modelos
 

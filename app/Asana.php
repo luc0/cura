@@ -22,13 +22,15 @@ class Asana extends Model
     {
         return $this->all()->filter(function ($asana) use ($search) {
             return $asana->benefits->first(function ($benefit) use ($search) {
-                $foundInName = collect($benefit->benefitable)->contains($search);
-                if (!$foundInName) {
-                    dump(collect($benefit));
-                    $foundInTags = collect($benefit)->contains($search);
-                    return $foundInTags;
+                $foundInName = str_contains($benefit->benefitable->name, $search);
+                if ($foundInName) {
+                    return $foundInName;
                 }
-                return $foundInName;
+                /** @var Benefit $benefit */
+                $foundInTags = collect($benefit->getTags())->filter(function($tag) use ($search) {
+                    return str_contains($tag, $search);
+                });
+                return count($foundInTags);
             });
         });
     }
